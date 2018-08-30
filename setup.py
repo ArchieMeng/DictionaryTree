@@ -3,8 +3,8 @@ import os
 
 os.environ['CC'] = 'g++'
 module1 = Extension('dictionary_tree',
-                    sources = ['bind.cpp', 'DictionaryTree.cpp'],
-                    extra_compile_args=['-std=c++11'])
+                    sources = ['bind.cpp', 'DictionaryTree.cpp', 'WordSolver.cpp'],
+                    extra_compile_args=['-O3'])
 
 setup (name = 'dictionary_tree',
        version = '1.0.0',

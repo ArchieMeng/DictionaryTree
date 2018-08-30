@@ -28,7 +28,8 @@ public:
     int getNodeCnt() {return this->nodeCnt;}
     DictionaryTree();
     ~DictionaryTree();
-private:
+
+protected:
     CharacterNode* root;
     int nodeCnt = 0;
 };
