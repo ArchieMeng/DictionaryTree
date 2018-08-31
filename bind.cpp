@@ -20,10 +20,9 @@ DT_init(DT *self) {
 
 static void
 DT_dealloc(DT *self) {
-    if (self->dict) {
-        delete self->dict;
-    }
-    PyObject_Del((PyObject*) self);
+    delete self->dict;
+
+    PyObject_Del(self);
 }
 
 static PyObject *
@@ -100,7 +99,7 @@ static PyTypeObject DictionaryTreeType = {
 // WordSolver
 typedef struct {
     PyObject_HEAD;
-    WordSolver *solver = NULL;
+    WordSolver *solver = nullptr;
 } WS;
 
 static int
@@ -111,17 +110,15 @@ WS_init(WS *self) {
 
 static void
 WS_dealloc(WS *self) {
-    if (self->solver) {
-        delete self->solver;
-    }
-    PyObject_Del((PyObject*) self);
+    delete self->solver;
+    PyObject_Del(self);
 }
 
 static PyObject *
 WS_insert(WS *self, PyObject *args) {
     char *s;
     if(!PyArg_ParseTuple(args, "s", &s)) {
-        return NULL;
+        return nullptr;
     }
     self->solver->insert(s);
     Py_RETURN_NONE;
@@ -131,7 +128,7 @@ static PyObject *
 WS_find(WS *self, PyObject *args) {
     char *s;
     if(!PyArg_ParseTuple(args, "s", &s)) {
-        return NULL;
+        return nullptr;
     }
 
     if(self->solver->find(s)) {
@@ -165,6 +162,7 @@ WS_solve(WS *self, PyObject *args) {
     for (i = 0; i < mLen; ++i) {
         vector<char> rv;
         row = PyObject_GetItem(args, PyLong_FromSsize_t(i));
+        Py_INCREF(row);
         rLen = PyObject_Length(row);
 #ifdef DEBUG
         printf("row length:%ld\n", rLen);
@@ -176,7 +174,9 @@ WS_solve(WS *self, PyObject *args) {
 
         for (j = 0;j < rLen;j++) {
             o = PyList_GetItem((_object*)row, j);
+            Py_INCREF(o);
             s = PyUnicode_AsUTF8(o);
+            Py_DECREF(o);
 #ifdef DEBUG
             printf("s:%p, %s, o: %p, o repr:%s, row repr:%s\n",
                    s, s, o, PyUnicode_AsUTF8(PyObject_Repr(o)), PyUnicode_AsUTF8(PyObject_Repr(row)));
@@ -188,9 +188,9 @@ WS_solve(WS *self, PyObject *args) {
                 return nullptr;
             }
         }
+        Py_DECREF(row);
         in.push_back(rv);
     }
-
     ans = self->solver->solve(in);
 #ifdef DEBUG
     puts("ans output");
