@@ -1,5 +1,6 @@
 #include "DictionaryTree.h"
 #include <vector>
+#include <string>
 using namespace std;
 
 bool DictionaryTree::find(string word) {
@@ -17,7 +18,7 @@ bool DictionaryTree::find(string word) {
 void DictionaryTree::insert(string word) {
     CharacterNode* cur = this->root;
     for(auto iter: word) {
-        if (cur->find(iter )) {
+        if (cur->find(iter)) {
             cur = cur->children[iter];
         } else {
             this->nodeCnt++;

@@ -4,7 +4,7 @@
 
 #include "WordSolver.h"
 
-vector <string> WordSolver::solve(vector < vector<char > > matrix) {
+vector <string> WordSolver::solve(vector < vector<char> > matrix) {
     vector<string> words;
     for (unsigned int i = 0; i < matrix.size(); ++i) {
         for (unsigned int j = 0; j < matrix[i].size(); ++j) {

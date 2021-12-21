@@ -131,9 +131,9 @@ if __name__ == "__main__":
     solveTime2 = time() - t
 
     print("ans1 == ans2 is", set(ans1) == set(ans2))
-    print("ans1 - ans2 =", set(ans1) - set(ans2))
-    print("ans1:", set(ans1))
-    print("ans2:", set(ans2))
+    print("ans1 - ans2 =", (set(ans1) | set(ans2)) - (set(ans1) & set(ans2)))
+    # print("ans1:", set(ans1))
+    # print("ans2:", set(ans2))
     print("python insert:", insertTime1, 's', "C insert:", insertTime2, 's')
     print("python solve:", solveTime1, 's', "C solve:", solveTime2, 's')
 

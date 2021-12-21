@@ -15,6 +15,7 @@ typedef struct {
 static int
 DT_init(DT *self) {
     self->dict = new DictionaryTree;
+    
     return self->dict != nullptr;
 }
 
@@ -28,6 +29,7 @@ DT_dealloc(DT *self) {
 static PyObject *
 DT_insert(DT *self, PyObject *args) {
     char *s;
+    
     if(!PyArg_ParseTuple(args, "s", &s)) {
         return NULL;
     }
@@ -38,6 +40,7 @@ DT_insert(DT *self, PyObject *args) {
 static PyObject *
 DT_find(DT *self, PyObject *args) {
     char *s;
+    
     if(!PyArg_ParseTuple(args, "s", &s)) {
         return NULL;
     }
@@ -105,6 +108,7 @@ typedef struct {
 static int
 WS_init(WS *self) {
     self->solver = new WordSolver;
+    
     return self->solver != nullptr;
 }
 
@@ -117,6 +121,7 @@ WS_dealloc(WS *self) {
 static PyObject *
 WS_insert(WS *self, PyObject *args) {
     char *s;
+    
     if(!PyArg_ParseTuple(args, "s", &s)) {
         return nullptr;
     }
@@ -127,6 +132,7 @@ WS_insert(WS *self, PyObject *args) {
 static PyObject *
 WS_find(WS *self, PyObject *args) {
     char *s;
+    
     if(!PyArg_ParseTuple(args, "s", &s)) {
         return nullptr;
     }
@@ -145,7 +151,7 @@ WS_solve(WS *self, PyObject *args) {
     PyObject *row, *o;
     PyObject *list;
     vector<vector<char > > in;
-    char *s = nullptr;
+    const char *s = nullptr;
     vector<string> ans;
 
     if (!PyArg_ParseTuple(args, "O", &args)) {
@@ -200,6 +206,7 @@ WS_solve(WS *self, PyObject *args) {
 #endif
     list = PyList_New(ans.size());
     Py_ssize_t idx = 0u;
+    
     for (auto &iter: ans) {
         PyList_SetItem(list, idx, PyUnicode_FromString(iter.c_str()));
         idx++;
